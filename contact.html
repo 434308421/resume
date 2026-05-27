@@ -1,0 +1,41 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>联系方式 | 王保会</title>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body data-page="contact">
+  <header class="navbar">
+    <div class="nav-inner">
+      <a class="nav-brand" href="index.html">Wang Portfolio</a>
+      <nav class="nav-links">
+        <a data-page="home" href="index.html">首页</a>
+        <a data-page="education" href="education.html">教育经历</a>
+        <a data-page="awards" href="awards.html">获奖经历</a>
+        <a data-page="certs" href="certs.html">个人证书</a>
+        <a data-page="projects" href="projects.html">作品项目</a>
+        <a data-page="contact" href="contact.html">联系方式</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="card" id="contact">
+      <h2>联系方式</h2>
+      <div class="contact-list">
+        <div class="contact-row"><span>邮箱：<a class="contact-link" href="mailto:your.email@example.com">your.email@example.com</a></span><button type="button" class="copy-btn" data-copy="your.email@example.com">复制</button></div>
+        <div class="contact-row"><span>GitHub：<a class="contact-link" href="https://github.com/yourname" target="_blank" rel="noopener noreferrer">https://github.com/yourname</a></span><button type="button" class="copy-btn" data-copy="https://github.com/yourname">复制</button></div>
+        <div class="contact-row"><span>博客：<a class="contact-link" href="https://yourblog.example.com" target="_blank" rel="noopener noreferrer">https://yourblog.example.com</a></span><button type="button" class="copy-btn" data-copy="https://yourblog.example.com">复制</button></div>
+        <div class="contact-row"><span>城市：苏州 / 可远程</span><button type="button" class="copy-btn" data-copy="苏州 / 可远程">复制</button></div>
+      </div>
+    </article>
+
+    <div class="footer">© 2026 王保会 · 最后更新：<span id="lastUpdated"></span></div>
+  </main>
+
+  <div id="toast" class="toast">已复制</div>
+  <script src="assets/main.js"></script>
+</body>
+</html>
