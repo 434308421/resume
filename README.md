@@ -9,7 +9,6 @@
 - `awards.html`：获奖经历
 - `certs.html`：个人证书
 - `projects.html`：作品项目（含详情弹窗）
-- `contact.html`：联系方式
 
 公共资源：
 

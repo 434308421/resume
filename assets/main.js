@@ -1,5 +1,7 @@
 ﻿(function () {
+  document.documentElement.classList.add("js-enabled");
   const toast = document.getElementById("toast");
+  let lastFocusedElement = null;
 
   function showToast(text) {
     if (!toast) return;
@@ -62,6 +64,7 @@
 
   function openModal(data) {
     if (!modal) return;
+    lastFocusedElement = document.activeElement;
     modalTitle.textContent = data.name || "项目详情";
     modalProblem.textContent = data.problem || "";
     modalSolution.textContent = data.solution || "";
@@ -69,12 +72,16 @@
     modalResult.textContent = data.result || "";
     modal.classList.add("show");
     modal.setAttribute("aria-hidden", "false");
+    if (modalClose) modalClose.focus();
   }
 
   function closeModal() {
     if (!modal) return;
     modal.classList.remove("show");
     modal.setAttribute("aria-hidden", "true");
+    if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
+      lastFocusedElement.focus();
+    }
   }
 
   document.querySelectorAll(".open-detail-btn").forEach(function (btn) {
@@ -98,15 +105,25 @@
 
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") closeModal();
+    if (!modal || !modal.classList.contains("show") || e.key !== "Tab") return;
+    const focusables = modal.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    if (!focusables.length) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
   });
 
   const lastUpdated = document.getElementById("lastUpdated");
   if (lastUpdated) {
-    const now = new Date();
-    const y = now.getFullYear();
-    const m = String(now.getMonth() + 1).padStart(2, "0");
-    const d = String(now.getDate()).padStart(2, "0");
-    lastUpdated.textContent = y + "-" + m + "-" + d;
+    lastUpdated.textContent = document.body.getAttribute("data-last-updated") || "未设置";
   }
 
   function markActiveNav() {

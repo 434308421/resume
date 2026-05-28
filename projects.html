@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="王保会的项目作品集，包含项目背景、方案、技术栈与结果。" />
   <title>作品项目 | 王保会</title>
   <link rel="stylesheet" href="assets/style.css" />
 </head>
-<body data-page="projects">
+<body data-page="projects" data-last-updated="2026-05-28">
   <header class="navbar">
     <div class="nav-inner">
       <a class="nav-brand" href="index.html">Wang Portfolio</a>
@@ -16,7 +17,6 @@
         <a data-page="awards" href="awards.html">获奖经历</a>
         <a data-page="certs" href="certs.html">个人证书</a>
         <a data-page="projects" href="projects.html">作品项目</a>
-        <a data-page="contact" href="contact.html">联系方式</a>
       </nav>
     </div>
   </header>
@@ -29,8 +29,8 @@
           <h3>项目 A：在线协作平台</h3>
           <p>负责前后端开发与部署，支持实时编辑和权限控制。技术栈：React + Node.js + PostgreSQL。</p>
           <div class="project-actions">
-            <a class="primary" href="https://github.com/yourname/collab-platform" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a href="https://demo.example.com/collab-platform" target="_blank" rel="noopener noreferrer">Demo</a>
+            <a class="primary" href="#" aria-disabled="true" title="请替换为真实仓库链接">GitHub（待补充）</a>
+            <a href="#" aria-disabled="true" title="请替换为真实演示链接">Demo（待补充）</a>
             <button type="button" class="open-detail-btn"
               data-name="项目 A：在线协作平台"
               data-problem="多人协作时存在权限混乱、编辑冲突与审计缺失问题。"
@@ -44,8 +44,8 @@
           <h3>项目 B：AI 图片工具 Web 客户端</h3>
           <p>实现多参数生成、任务状态提示与错误追踪，提升使用效率和交互体验。</p>
           <div class="project-actions">
-            <a class="primary" href="https://github.com/yourname/ai-image-client" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a href="https://demo.example.com/ai-image-client" target="_blank" rel="noopener noreferrer">Demo</a>
+            <a class="primary" href="#" aria-disabled="true" title="请替换为真实仓库链接">GitHub（待补充）</a>
+            <a href="#" aria-disabled="true" title="请替换为真实演示链接">Demo（待补充）</a>
             <button type="button" class="open-detail-btn"
               data-name="项目 B：AI 图片工具 Web 客户端"
               data-problem="调用图像接口时参数复杂、失败提示弱，影响使用效率。"
@@ -59,8 +59,8 @@
           <h3>项目 C：自动化运维脚本集</h3>
           <p>基于 Python 构建批处理工具，减少重复操作并提升部署稳定性。</p>
           <div class="project-actions">
-            <a class="primary" href="https://github.com/yourname/ops-scripts" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a href="https://demo.example.com/ops-scripts" target="_blank" rel="noopener noreferrer">Demo</a>
+            <a class="primary" href="#" aria-disabled="true" title="请替换为真实仓库链接">GitHub（待补充）</a>
+            <a href="#" aria-disabled="true" title="请替换为真实演示链接">Demo（待补充）</a>
             <button type="button" class="open-detail-btn"
               data-name="项目 C：自动化运维脚本集"
               data-problem="发布和巡检依赖手工流程，耗时且易出错。"
@@ -76,8 +76,8 @@
   </main>
 
   <div id="toast" class="toast">已复制</div>
-  <div id="projectModal" class="modal" aria-hidden="true">
-    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div id="projectModal" class="modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalProblem">
       <div class="modal-head">
         <h3 id="modalTitle">项目详情</h3>
         <button id="modalClose" type="button" class="modal-close">关闭</button>
@@ -94,3 +94,4 @@
   <script src="assets/main.js"></script>
 </body>
 </html>
+
