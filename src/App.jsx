@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
+const asset = (name) => `${import.meta.env.BASE_URL}assets/${name}`;
+
 const copy = {
   zh: {
     brand: "王保会",
@@ -195,6 +197,7 @@ export function App() {
   const [scrolled, setScrolled] = useState(false);
   const [openProject, setOpenProject] = useState(0);
   const t = useMemo(() => copy[lang], [lang]);
+  const pageStyle = { "--page-bg-image": `url(${asset("paper-wash.jpg")})` };
 
   useEffect(() => {
     document.documentElement.lang = lang === "en" ? "en" : "zh-CN";
@@ -231,7 +234,7 @@ export function App() {
   };
 
   return (
-    <div className="page" id="top">
+    <div className="page" id="top" style={pageStyle}>
       <header className={`top${scrolled ? " scrolled" : ""}`}>
         <nav className="nav" aria-label="Primary">
           <a className="brand" href="#top" onClick={(e) => { e.preventDefault(); go("top"); }}>
@@ -304,7 +307,7 @@ export function App() {
             </div>
           </div>
           <figure className="portrait">
-            <img src="/assets/portrait.jpg" alt={t.portraitAlt} width="480" height="600" />
+            <img src={asset("portrait.jpg")} alt={t.portraitAlt} width="480" height="600" />
           </figure>
         </section>
 

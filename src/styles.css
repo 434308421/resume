@@ -31,10 +31,7 @@ body {
   min-height: 100vh;
   font-family: var(--sans);
   color: var(--ink);
-  background:
-    linear-gradient(180deg, rgba(250, 249, 245, 0.92), rgba(250, 249, 245, 0.96)),
-    url("/assets/paper-wash.jpg") top center / 1400px auto no-repeat,
-    var(--bg);
+  background: var(--bg);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -47,6 +44,10 @@ a {
 
 .page {
   min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(250, 249, 245, 0.92), rgba(250, 249, 245, 0.96)),
+    var(--page-bg-image) top center / 1400px auto no-repeat,
+    var(--bg);
 }
 
 .top {
