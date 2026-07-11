@@ -29,6 +29,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  overflow-x: hidden;
   font-family: var(--sans);
   color: var(--ink);
   background: var(--bg);
@@ -431,31 +432,177 @@ footer {
   font-size: 0.9rem;
 }
 
-@media (max-width: 760px) {
-  .hero {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
+@media (max-width: 900px) {
   .nav-links {
     display: none;
   }
 
   .menu-btn {
     display: inline-flex;
+    min-height: 40px;
+    min-width: 40px;
   }
 
-  .portrait {
-    max-width: 260px;
-    width: 100%;
+  .lang {
+    min-height: 40px;
+  }
+}
+
+@media (max-width: 760px) {
+  .nav {
+    width: min(100% - 1.25rem, var(--measure));
+    min-height: 58px;
+    gap: 0.6rem;
   }
 
-  h1 {
-    font-size: clamp(2rem, 9vw, 2.6rem);
+  .brand {
+    font-size: 1rem;
+    max-width: 46vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mobile-menu a {
+    width: min(100% - 1.25rem, var(--measure));
+    padding: 1rem 0;
+    font-size: 1rem;
+  }
+
+  main,
+  footer {
+    width: min(100% - 1.25rem, var(--measure));
   }
 
   main {
-    padding-top: 1.4rem;
+    padding: 1.2rem 0 4rem;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 1.35rem;
+    padding: 0.7rem 0 1.8rem;
+  }
+
+  .hero-copy {
+    order: 1;
+  }
+
+  .portrait {
+    order: 2;
+    width: min(100%, 280px);
+    max-width: none;
+    margin-inline: auto;
+  }
+
+  .eyebrow {
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    line-height: 1.45;
+    text-transform: none;
+  }
+
+  h1 {
+    font-size: clamp(1.9rem, 8.5vw, 2.45rem);
+    letter-spacing: -0.02em;
+    max-width: 12ch;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .cta-row {
+    gap: 0.55rem;
+  }
+
+  .btn {
+    min-height: 44px;
+    padding: 0.7rem 1rem;
+    flex: 1 1 auto;
+  }
+
+  .section {
+    padding: 1.9rem 0;
+  }
+
+  h2 {
+    font-size: 1.35rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .about p {
+    max-width: none;
+  }
+
+  .research-list li {
+    grid-template-columns: 1.8rem 1fr;
+    gap: 0.65rem;
+    padding: 0.9rem 0;
+  }
+
+  .project summary {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    padding: 0.95rem 0;
+  }
+
+  .project-title {
+    max-width: none;
+    line-height: 1.35;
+  }
+
+  .project-year {
+    white-space: normal;
+  }
+
+  .project-body p {
+    max-width: none;
+  }
+
+  .empty {
+    padding: 0.9rem 1rem;
+  }
+
+  .timeline {
+    margin-left: 0.2rem;
+    padding-left: 0.95rem;
+  }
+
+  .chips {
+    gap: 0.45rem;
+  }
+
+  .chip {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  footer {
+    margin-bottom: 1.4rem;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+}
+
+@media (max-width: 420px) {
+  .cta-row {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .nav-actions {
+    gap: 0.4rem;
+  }
+
+  .lang,
+  .menu-btn {
+    padding: 0.38rem 0.65rem;
   }
 }
 
