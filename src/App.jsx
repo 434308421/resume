@@ -1,207 +1,44 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { copy } from "./content.js";
 
 const asset = (name) => `${import.meta.env.BASE_URL}assets/${name}`;
+const LANG_KEY = "qs-lang";
+const SECTION_IDS = ["about", "research", "projects", "pubs", "contact"];
 
-const copy = {
-  zh: {
-    brand: "王保会",
-    nav: {
-      about: "关于",
-      research: "方向",
-      projects: "项目",
-      pubs: "成果",
-      contact: "联系",
-    },
-    menu: "菜单",
-    close: "关闭",
-    langSwitch: "EN",
-    eyebrow: "人工智能 · 研 0 · 大连民族大学",
-    name: "你好，我是王保会",
-    subtitle:
-      "关注可靠、可解释与可部署的智能系统。这里记录我的研究方向、项目与申博材料。",
-    ctaProjects: "查看项目",
-    ctaContact: "取得联系",
-    portraitAlt: "学术头像",
-    aboutTitle: "关于我",
-    aboutP1:
-      "我是大连民族大学 2026 级人工智能研究生（研 0），导师王鹏杰。当前正在建立长期研究主线，并对大模型可靠性、多模态理解与 AI 系统落地保持持续关注。",
-    researchTitle: "研究方向",
-    research: [
-      {
-        num: "01",
-        title: "可靠大模型系统",
-        desc: "幻觉抑制、工具调用、评测协议与失败案例分析。",
-      },
-      {
-        num: "02",
-        title: "多模态理解与生成",
-        desc: "图像—文本对齐、结构化感知，以及面向科研工作流的交互。",
-      },
-      {
-        num: "03",
-        title: "可部署 AI 应用",
-        desc: "从原型到服务：延迟、成本、可维护性与可复现实验。",
-      },
-    ],
-    projectsTitle: "项目与 Demo",
-    projects: [
-      {
-        year: "2026",
-        title: "学术主页（本站）",
-        body: "Quiet Scholar 风格的中英双语学术站，支持锚点导航与后续阿里云静态部署。",
-        links: [
-          { label: "本地预览", href: "#top" },
-          { label: "结构说明", href: "#about" },
-        ],
-      },
-      {
-        year: "TBD",
-        title: "评测基准探索（占位）",
-        body: "预留实验、代码与结果摘要位置，可链接论文 PDF、仓库与可复现脚本。",
-        links: [
-          { label: "Paper", href: "#" },
-          { label: "Code", href: "#" },
-        ],
-      },
-      {
-        year: "TBD",
-        title: "交互式 Demo（占位）",
-        body: "适合放模型演示、可视化面板或短视频。申博材料中很加分。",
-        links: [
-          { label: "Live", href: "#" },
-          { label: "Write-up", href: "#" },
-        ],
-      },
-    ],
-    pubsTitle: "成果与经历",
-    pubsEmpty: "暂无正式发表。结构已预留：论文标题 / venue / 年份 / PDF。",
-    timeline: [
-      {
-        when: "2026 —",
-        text: "人工智能研究生 · 建立研究主线与作品集",
-      },
-      {
-        when: "Earlier",
-        text: "本科阶段 · 可补充课程、竞赛、实习与开源贡献",
-      },
-    ],
-    contactTitle: "联系",
-    contactLead: "欢迎学术交流、合作与申博相关沟通。",
-    contact: [
-      { label: "Email", href: "mailto:you@example.com" },
-      { label: "GitHub", href: "#" },
-      { label: "Google Scholar", href: "#" },
-      { label: "ORCID", href: "#" },
-      { label: "CV PDF", href: "#" },
-    ],
-    footer: "Quiet Scholar · 面向申博的双语学术主页原型",
-  },
-  en: {
-    brand: "Baohui Wang",
-    nav: {
-      about: "About",
-      research: "Research",
-      projects: "Projects",
-      pubs: "Work",
-      contact: "Contact",
-    },
-    menu: "Menu",
-    close: "Close",
-    langSwitch: "中文",
-    eyebrow: "Artificial Intelligence · Incoming M.S. · Dalian Minzu University",
-    name: "Hi, I'm Baohui Wang",
-    subtitle:
-      "I study reliable, interpretable, and deployable intelligent systems. This site collects research directions, projects, and PhD application materials.",
-    ctaProjects: "View projects",
-    ctaContact: "Get in touch",
-    portraitAlt: "Academic portrait",
-    aboutTitle: "About",
-    aboutP1:
-      "I am an incoming 2026 graduate student in AI at Dalian Minzu University, advised by Pengjie Wang. I am shaping a long-term research agenda around reliable large models, multimodal understanding, and deployable AI systems.",
-    researchTitle: "Research Directions",
-    research: [
-      {
-        num: "01",
-        title: "Reliable LLM Systems",
-        desc: "Hallucination control, tool use, evaluation protocols, and failure analysis.",
-      },
-      {
-        num: "02",
-        title: "Multimodal Understanding",
-        desc: "Image-text alignment, structured perception, and research-workflow interfaces.",
-      },
-      {
-        num: "03",
-        title: "Deployable AI Applications",
-        desc: "From prototype to service: latency, cost, maintainability, and reproducibility.",
-      },
-    ],
-    projectsTitle: "Projects & Demos",
-    projects: [
-      {
-        year: "2026",
-        title: "Academic homepage (this site)",
-        body: "A Quiet Scholar bilingual academic site with anchor navigation and Alibaba Cloud static-deploy readiness.",
-        links: [
-          { label: "Local preview", href: "#top" },
-          { label: "About structure", href: "#about" },
-        ],
-      },
-      {
-        year: "TBD",
-        title: "Benchmark exploration (placeholder)",
-        body: "Reserved for experiments, code, and result summaries. Can link PDF, repo, and reproduction scripts.",
-        links: [
-          { label: "Paper", href: "#" },
-          { label: "Code", href: "#" },
-        ],
-      },
-      {
-        year: "TBD",
-        title: "Interactive demo (placeholder)",
-        body: "A slot for model demos, visualization panels, or short videos — often valuable for PhD applications.",
-        links: [
-          { label: "Live", href: "#" },
-          { label: "Write-up", href: "#" },
-        ],
-      },
-    ],
-    pubsTitle: "Selected Work & Timeline",
-    pubsEmpty: "No formal publications yet. Structure reserved for title / venue / year / PDF.",
-    timeline: [
-      {
-        when: "2026 —",
-        text: "Graduate study in AI · building research agenda and portfolio",
-      },
-      {
-        when: "Earlier",
-        text: "Undergraduate · coursework, contests, internships, open-source contributions",
-      },
-    ],
-    contactTitle: "Contact",
-    contactLead: "Open to academic discussion, collaboration, and PhD-related conversations.",
-    contact: [
-      { label: "Email", href: "mailto:you@example.com" },
-      { label: "GitHub", href: "#" },
-      { label: "Google Scholar", href: "#" },
-      { label: "ORCID", href: "#" },
-      { label: "CV PDF", href: "#" },
-    ],
-    footer: "Quiet Scholar · bilingual academic homepage prototype for PhD outreach",
-  },
-};
+function readInitialLang() {
+  try {
+    const saved = localStorage.getItem(LANG_KEY);
+    if (saved === "zh" || saved === "en") return saved;
+  } catch {
+    /* ignore */
+  }
+  return "zh";
+}
 
 export function App() {
-  const [lang, setLang] = useState("zh");
+  const [lang, setLang] = useState(readInitialLang);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [openProject, setOpenProject] = useState(0);
+  const [activeSection, setActiveSection] = useState("");
+  const menuBtnRef = useRef(null);
+  const menuPanelRef = useRef(null);
+  const menuId = useId();
   const t = useMemo(() => copy[lang], [lang]);
+  const contactItems = useMemo(() => t.getContact(), [t]);
   const pageStyle = { "--page-bg-image": `url(${asset("paper-wash.jpg")})` };
 
   useEffect(() => {
     document.documentElement.lang = lang === "en" ? "en" : "zh-CN";
-  }, [lang]);
+    document.title = t.docTitle;
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute("content", t.docDescription);
+    try {
+      localStorage.setItem(LANG_KEY, lang);
+    } catch {
+      /* ignore */
+    }
+  }, [lang, t]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -211,12 +48,65 @@ export function App() {
   }, []);
 
   useEffect(() => {
+    const nodes = SECTION_IDS.map((id) => document.getElementById(id)).filter(Boolean);
+    if (!nodes.length) return undefined;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]?.target?.id) {
+          setActiveSection(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-30% 0px -55% 0px",
+        threshold: [0.08, 0.25, 0.5, 0.75],
+      },
+    );
+
+    nodes.forEach((node) => observer.observe(node));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     if (!menuOpen) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const panel = menuPanelRef.current;
+    const focusables = panel
+      ? Array.from(panel.querySelectorAll("a, button")).filter((el) => !el.hasAttribute("disabled"))
+      : [];
+    focusables[0]?.focus();
+
     const onKey = (e) => {
-      if (e.key === "Escape") setMenuOpen(false);
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setMenuOpen(false);
+        menuBtnRef.current?.focus();
+        return;
+      }
+
+      if (e.key !== "Tab" || focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
+
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKey);
+    };
   }, [menuOpen]);
 
   const navItems = [
@@ -229,15 +119,32 @@ export function App() {
 
   const go = (id) => {
     setMenuOpen(false);
+    if (id === "top") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  const toggleLang = () => setLang((v) => (v === "zh" ? "en" : "zh"));
+
   return (
     <div className="page" id="top" style={pageStyle}>
+      <a className="skip-link" href="#main">
+        {lang === "zh" ? "跳到主要内容" : "Skip to content"}
+      </a>
+
       <header className={`top${scrolled ? " scrolled" : ""}`}>
-        <nav className="nav" aria-label="Primary">
-          <a className="brand" href="#top" onClick={(e) => { e.preventDefault(); go("top"); }}>
+        <nav className="nav" aria-label={lang === "zh" ? "主导航" : "Primary"}>
+          <a
+            className="brand"
+            href="#top"
+            onClick={(e) => {
+              e.preventDefault();
+              go("top");
+            }}
+          >
             {t.brand}
           </a>
           <ul className="nav-links">
@@ -245,6 +152,8 @@ export function App() {
               <li key={item.id}>
                 <a
                   href={`#${item.id}`}
+                  className={activeSection === item.id ? "active" : undefined}
+                  aria-current={activeSection === item.id ? "page" : undefined}
                   onClick={(e) => {
                     e.preventDefault();
                     go(item.id);
@@ -256,30 +165,37 @@ export function App() {
             ))}
           </ul>
           <div className="nav-actions">
-            <button
-              type="button"
-              className="lang"
-              onClick={() => setLang((v) => (v === "zh" ? "en" : "zh"))}
-              aria-label="Switch language"
-            >
+            <button type="button" className="lang" onClick={toggleLang} aria-label={t.langAria}>
               {t.langSwitch}
             </button>
             <button
+              ref={menuBtnRef}
               type="button"
               className="menu-btn"
               aria-expanded={menuOpen}
-              aria-controls="mobile-menu"
+              aria-controls={menuId}
+              aria-label={menuOpen ? t.menuCloseAria : t.menuOpenAria}
               onClick={() => setMenuOpen((v) => !v)}
             >
-              {menuOpen ? t.close : t.menu}
+              <span className="menu-icon" aria-hidden="true">
+                <span />
+                <span />
+                <span />
+              </span>
             </button>
           </div>
         </nav>
-        <div className={`mobile-menu${menuOpen ? " open" : ""}`} id="mobile-menu">
+        <div
+          ref={menuPanelRef}
+          className={`mobile-menu${menuOpen ? " open" : ""}`}
+          id={menuId}
+          hidden={!menuOpen}
+        >
           {navItems.map((item) => (
             <a
               key={item.id}
               href={`#${item.id}`}
+              className={activeSection === item.id ? "active" : undefined}
               onClick={(e) => {
                 e.preventDefault();
                 go(item.id);
@@ -291,8 +207,8 @@ export function App() {
         </div>
       </header>
 
-      <main>
-        <section className="hero">
+      <main id="main">
+        <section className="hero" aria-label="Hero">
           <div className="hero-copy">
             <div className="eyebrow">{t.eyebrow}</div>
             <h1>{t.name}</h1>
@@ -307,7 +223,14 @@ export function App() {
             </div>
           </div>
           <figure className="portrait">
-            <img src={asset("portrait.jpg")} alt={t.portraitAlt} width="480" height="600" />
+            <img
+              src={asset("portrait.jpg")}
+              alt={t.portraitAlt}
+              width="480"
+              height="600"
+              decoding="async"
+              fetchPriority="high"
+            />
           </figure>
         </section>
 
@@ -339,7 +262,7 @@ export function App() {
               return (
                 <details
                   key={project.title}
-                  className="project"
+                  className={`project${project.ready ? "" : " pending"}`}
                   open={open}
                   onToggle={(e) => {
                     if (e.currentTarget.open) {
@@ -350,17 +273,54 @@ export function App() {
                   }}
                 >
                   <summary>
-                    <span className="project-title">{project.title}</span>
+                    <span className="project-title">
+                      {project.title}
+                      {!project.ready ? (
+                        <span className="badge">{lang === "zh" ? "建设中" : "WIP"}</span>
+                      ) : null}
+                    </span>
                     <span className="project-year">{project.year}</span>
                   </summary>
                   <div className="project-body">
                     <p>{project.body}</p>
                     <div className="project-links">
-                      {project.links.map((link) => (
-                        <a key={link.label} href={link.href}>
-                          {link.label}
-                        </a>
-                      ))}
+                      {project.links.map((link) => {
+                        const hasHref = Boolean(link.href);
+                        if (!hasHref) {
+                          return (
+                            <span key={link.label} className="link-disabled" aria-disabled="true">
+                              {link.label}
+                            </span>
+                          );
+                        }
+
+                        if (link.href.startsWith("#")) {
+                          const target = link.href.slice(1) || "top";
+                          return (
+                            <a
+                              key={link.label}
+                              href={link.href}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                go(target);
+                              }}
+                            >
+                              {link.label}
+                            </a>
+                          );
+                        }
+
+                        return (
+                          <a
+                            key={link.label}
+                            href={link.href}
+                            target={link.external ? "_blank" : undefined}
+                            rel={link.external ? "noopener noreferrer" : undefined}
+                          >
+                            {link.label}
+                          </a>
+                        );
+                      })}
                     </div>
                   </div>
                 </details>
@@ -371,7 +331,26 @@ export function App() {
 
         <section id="pubs" className="section">
           <h2>{t.pubsTitle}</h2>
-          <div className="empty">{t.pubsEmpty}</div>
+          {t.pubs?.length ? (
+            <ul className="pub-list">
+              {t.pubs.map((pub) => (
+                <li key={`${pub.title}-${pub.year}`}>
+                  <div className="item-title">{pub.title}</div>
+                  <div className="muted">
+                    {pub.venue}
+                    {pub.year ? ` · ${pub.year}` : ""}
+                  </div>
+                  {pub.href ? (
+                    <a className="pub-link" href={pub.href} target="_blank" rel="noopener noreferrer">
+                      PDF
+                    </a>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div className="empty">{t.pubsEmpty}</div>
+          )}
           <div className="timeline">
             {t.timeline.map((row) => (
               <div className="row" key={row.when + row.text}>
@@ -386,11 +365,19 @@ export function App() {
           <h2>{t.contactTitle}</h2>
           <p className="muted">{t.contactLead}</p>
           <div className="chips">
-            {t.contact.map((item) => (
-              <a className="chip" key={item.label} href={item.href}>
-                {item.label}
-              </a>
-            ))}
+            {contactItems
+              .filter((item) => item.ready)
+              .map((item) => (
+                <a
+                  className="chip"
+                  key={item.id}
+                  href={item.href}
+                  target={item.id === "email" ? undefined : "_blank"}
+                  rel={item.id === "email" ? undefined : "noopener noreferrer"}
+                >
+                  {item.label}
+                </a>
+              ))}
           </div>
         </section>
       </main>
